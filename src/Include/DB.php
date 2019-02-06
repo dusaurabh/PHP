@@ -1,7 +1,3 @@
 <?php  
-$con = mysql_connect('localhost','root','');
-$connectingDB = mysql_select_db('phpcms', $con);
-
-
-
+$con = mysql_connect('localhost','root','','phpcms');
 ?>
