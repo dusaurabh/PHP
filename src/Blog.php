@@ -81,7 +81,7 @@
     <div class="row">
         <div class="col-sm-8">
 <?php 
-global $connectingDB;
+global $con;
 if(isset($_GET["SearchButton"])){
  $Search =$_GET["Search"];
  $ViewQuery = "SELECT * FROM admin_panel WHERE datetime LIKE  '%$Search%' OR title LIKE '%$Search%' OR category LIKE '%$Search%' OR post LIKE '%$Search%'  ";
@@ -97,8 +97,8 @@ if(isset($_GET["SearchButton"])){
 }
  else{
  $ViewQuery = "SELECT * FROM admin_panel ORDER BY id desc LIMIT 0,5";}
- $Execute = mysql_query($ViewQuery);
- while($DataRows=mysql_fetch_array($Execute)){
+ $Execute = mysqli_query($con,$ViewQuery);
+ while($DataRows = mysqli_fetch_array($Execute)){
  $PostId = $DataRows["id"];
  $DateTime = $DataRows["datetime"];
  $Title = $DataRows["title"];
@@ -139,10 +139,10 @@ if(isset($_GET["SearchButton"])){
         
         
 <?php
- global $connectingDB;
- $ViewQuery="SELECT COUNT(*) FROM admin_panel";
- $Execute=mysql_query($ViewQuery);
- $RowPagination=mysql_fetch_array($Execute);
+ global $con;
+ $ViewQuery = "SELECT COUNT(*) FROM admin_panel";
+ $Execute = mysqli_query($con,$ViewQuery);
+ $RowPagination = mysqli_fetch_array($Execute);
  $TotalPosts=array_shift($RowPagination);
 // echo $TotalPosts;
 $PostsPerPage=$TotalPosts/5;
