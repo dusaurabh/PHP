@@ -66,10 +66,10 @@
     <li><a class="nav-link" href="Comments.php"><i class="fa fa-comment"></i> &nbsp;Comments
       &nbsp;  
 <?php   
-$connectinDB;
-$QueryTotal="SELECT COUNT(*) FROM comments WHERE  status='OFF'";
-$ExecuteTotal=mysql_query($QueryTotal);
-$RowsTotal=mysql_fetch_array($ExecuteTotal);
+$con;
+$QueryTotal = "SELECT COUNT(*) FROM comments WHERE  status='OFF'";
+$ExecuteTotal = mysqli_query($con,$QueryTotal);
+$RowsTotal = mysqli_fetch_array($ExecuteTotal);
 $Total=array_shift($RowsTotal);  
  if($Total>0){
 ?>
@@ -105,11 +105,11 @@ $Total=array_shift($RowsTotal);
      <th>Details</th>
     </tr>
 <?php 
- global $connectingDB;
+ global $con;
  $ViewQuery = "SELECT * FROM admin_panel ORDER BY id desc;";
- $Execute = mysql_query($ViewQuery);
+ $Execute = mysqli_query($con,$ViewQuery);
  $SrNo = 0;
- while($DataRows=mysql_fetch_array($Execute)){
+ while($DataRows = mysqli_fetch_array($Execute)){
      $Id = $DataRows["id"];
      $DateTime = $DataRows["datetime"];
      $Title = $DataRows["title"];
@@ -130,11 +130,11 @@ $Total=array_shift($RowsTotal);
  <td><img class="img-fluid" src="Upload/<?php echo $Image; ?>" width="180px;" height="50px;"></td>
  <td>
  <?php  
-  $connectinDB;
-  $QueryApprove="SELECT COUNT(*) FROM comments WHERE admin_panel_id='$Id' AND status='ON'";
-  $ExecuteApprove=mysql_query($QueryApprove);
-  $RowsApprove=mysql_fetch_array($ExecuteApprove);
-  $TotalApprove=array_shift($RowsApprove);  
+  $con;
+  $QueryApprove = "SELECT COUNT(*) FROM comments WHERE admin_panel_id='$Id' AND status='ON'";
+  $ExecuteApprove = mysqli_query($con,$QueryApprove);
+  $RowsApprove = mysqli_fetch_array($ExecuteApprove);
+  $TotalApprove = array_shift($RowsApprove);  
      if($TotalApprove>0){
 ?>
 <span class="badge badge-success pull-left">
@@ -143,10 +143,10 @@ $Total=array_shift($RowsTotal);
      <?php } ?>
      
  <?php  
-  $connectinDB;
-  $QueryUnApprove="SELECT COUNT(*) FROM comments WHERE admin_panel_id='$Id' AND status='OFF'";
-  $ExecuteUnApprove=mysql_query($QueryUnApprove);
-  $RowsUnApprove=mysql_fetch_array($ExecuteUnApprove);
+  $con;
+  $QueryUnApprove = "SELECT COUNT(*) FROM comments WHERE admin_panel_id='$Id' AND status='OFF'";
+  $ExecuteUnApprove = mysqli_query($con,$QueryUnApprove);
+  $RowsUnApprove=mysqli_fetch_array($ExecuteUnApprove);
   $TotalUnApprove=array_shift($RowsUnApprove);  
      if($TotalUnApprove>0){
 ?>
