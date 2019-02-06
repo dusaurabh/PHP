@@ -3,9 +3,9 @@
 
 <?php  
 if(isset($_POST["Submit"])){
-    $Username = mysql_real_escape_string($_POST["Username"]);
-    $Password = mysql_real_escape_string($_POST["Password"]);
-    $ConfirmPassword = mysql_real_escape_string($_POST["ConfirmPassword"]);
+    $Username = $_POST["Username"];
+    $Password = $_POST["Password"];
+    $ConfirmPassword = $_POST["ConfirmPassword"];
     date_default_timezone_set('Asia/Kolkata');
     $currenttime = time();
     $DateTime = strftime("%B-%d-%Y %H:%M:%S", $currenttime);
@@ -30,9 +30,9 @@ if(isset($_POST["Submit"])){
          echo "alert('Password and Confirm Password does not Match')";
          echo '</script>';
     }else{
-        global $connectingDB;
+        global $con;
         $Query = "INSERT INTO registration(datetime,username,password,addedby)VALUES('$DateTime','$Username','$Password','$Admin')";
-        $Execute = mysql_query($Query);
+        $Execute = mysqli_query($con,$Query);
         if($Execute){
             echo '<script language="javascript">';
             echo "alert('Admin Added SuccessFully')";
@@ -165,11 +165,11 @@ if(isset($_POST["Submit"])){
                     
 <?php  
                     
-global $connectingDB;
+global $con;
 $ViewQuery = "SELECT * FROM registration ORDER BY id DESC";
-$Execute = mysql_query($ViewQuery);
+$Execute = mysqli_query($con,$ViewQuery);
 $SrNo = 0; 
-while($DataRows = mysql_fetch_array($Execute)){
+while($DataRows = mysqli_fetch_array($Execute)){
     $ID = $DataRows["id"];
     $DateTime = $DataRows["datetime"];
     $Username = $DataRows["username"];
