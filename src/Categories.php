@@ -4,7 +4,7 @@
 <?php Confirm_Login(); ?>
 <?php  
 if(isset($_POST["Submit"])){
-    $Category = mysql_real_escape_string($_POST["Category"]);
+    $Category = $_POST["Category"];
     date_default_timezone_set('Asia/Kolkata');
     $currenttime = time();
     $DateTime = strftime("%B-%d-%Y %H:%M:%S", $currenttime);
@@ -21,9 +21,9 @@ if(isset($_POST["Submit"])){
          echo "alert('TOO LONG NAME')";
          echo '</script>';
     }else{
-        global $connectingDB;
+        global $con;
         $Query = "INSERT INTO Category(datetime,name,creatorname)VALUES('$DateTime','$Category','$Admin')";
-        $Execute = mysql_query($Query);
+        $Execute = mysqli_query($con,$Query);
         if($Execute){
             echo '<script language="javascript">';
             echo "alert('Category Added SuccessFully')";
@@ -108,11 +108,11 @@ if(isset($_POST["Submit"])){
                     
 <?php  
                     
-global $connectingDB;
+global $con;
 $ViewQuery = "SELECT * FROM Category ORDER BY id DESC";
-$Execute = mysql_query($ViewQuery);
+$Execute = mysqli_query($con,$ViewQuery);
 $SrNo = 0; 
-while($DataRows = mysql_fetch_array($Execute)){
+while($DataRows = mysqli_fetch_array($Execute)){
     $ID = $DataRows["id"];
     $DateTime = $DataRows["datetime"];
     $CategoryName = $DataRows["name"];
