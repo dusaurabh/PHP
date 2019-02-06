@@ -3,11 +3,11 @@
 <?php require_once('Include/Functions.php');  ?>
 <?php  
 if(isset($_GET["id"])){
- $connectingDB;
+ $con;
  $IdFromUrl=$_GET["id"];
     $Admin=$_SESSION["Username"];
  $Query="UPDATE comments set status='ON',approveby='$Admin' WHERE id='$IdFromUrl' ";
- $Execute=mysql_query($Query);
+ $Execute=mysqli_query($con,$Query);
  if($Execute){
      $_SESSION["SuccessMessage"]="Comment Approved SuccessFully";
      Redirect_to("Comments.php");
