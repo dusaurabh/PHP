@@ -86,11 +86,11 @@
     <th>Details</th>
   </tr>
 <?php  
-global $connectingDB;
-$SrNo=0;
+global $con;
+$SrNo = 0;
 $Query="SELECT * FROM comments WHERE status='OFF' ORDER BY id desc";
-$Execute=mysql_query($Query);
-while($DataRows=mysql_fetch_array($Execute)){
+$Execute = mysql_query($con,$Query);
+while($DataRows = mysqli_fetch_array($Execute)){
     $Id=$DataRows['id'];
     $CommenterName=$DataRows['name'];
     $CommentDate=$DataRows['datetime'];
@@ -132,10 +132,10 @@ while($DataRows=mysql_fetch_array($Execute)){
     <th>Details</th>
   </tr>
 <?php  
-global $connectingDB;
+global $con;
 $SrNo=0;
 $Query="SELECT * FROM comments WHERE status='ON' ORDER BY datetime desc";
-$Execute=mysql_query($Query);
+$Execute=mysqli_query($con,$Query);
 $Admin=$_SESSION["Username"];
 while($DataRows=mysql_fetch_array($Execute)){
     $Id=$DataRows['id'];
