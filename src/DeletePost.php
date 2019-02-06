@@ -3,9 +3,9 @@
 <?php require_once('Include/Functions.php');  ?>
 <?php  
 if(isset($_POST["Submit"])){
-$Title = mysql_real_escape_string($_POST["Title"]);
-$Category = mysql_real_escape_string($_POST["Category"]);
-$Post = mysql_real_escape_string($_POST["Post"]);
+$Title = $_POST["Title"];
+$Category = $_POST["Category"];
+$Post = $_POST["Post"];
 date_default_timezone_set('Asia/Kolkata');
 $currenttime = time();
 $DateTime = strftime("%B-%d-%Y %H:%M:%S", $currenttime);
@@ -14,10 +14,10 @@ $Admin = "Saurabh Dubey";
 $Image = $_FILES["Image"]["name"];
 $Target = "Upload/".basename($_FILES["Image"]["name"]);
 
-    global $connectingDB;
+    global $con;
     $DeleteFromUrl=$_GET['Delete'];
     $Query="DELETE FROM admin_panel WHERE id='$DeleteFromUrl'";
-    $Execute = mysql_query($Query);
+    $Execute = mysqli_query($con,$Query);
     move_uploaded_file($_FILES["Image"]["tmp_name"],$Target);
     if($Execute){
      $_SESSION["DeleteMessage"]="Post Is Deleted SuccessFully";
@@ -77,10 +77,10 @@ $Target = "Upload/".basename($_FILES["Image"]["name"]);
   <div>
 <?php 
 $SearchQueryParameter=$_GET["Delete"];
-global $connectingDB;       
+global $con;       
 $Query="SELECT * FROM admin_panel WHERE id='$SearchQueryParameter'";
-$Execute = mysql_query($Query);
-while($DataRows=mysql_fetch_array($Execute)){
+$Execute = mysqli_query($con,$Query);
+while($DataRows=mysqli_fetch_array($Execute)){
     $TitleToBeUpdate=$DataRows['title'];
     $CategoryToBeUpdate=$DataRows['category'];
     $ImageToBeUpdate=$DataRows['image'];
@@ -99,11 +99,11 @@ while($DataRows=mysql_fetch_array($Execute)){
         <label for="categoryname"><span class="FieldInfo">Category:</span></label>
         <select disabled class="form-control form-control-lg" id="categoryname" name="Category">
         <?php                    
-global $connectingDB;
+global $con;
 $ViewQuery = "SELECT * FROM Category ORDER BY datetime DESC";
-$Execute = mysql_query($ViewQuery);
+$Execute = mysqli_query($con,$ViewQuery);
 
-while($DataRows = mysql_fetch_array($Execute)){
+while($DataRows = mysqli_fetch_array($Execute)){
     $ID = $DataRows["id"];
     $CategoryName = $DataRows["name"];   
 ?>  
