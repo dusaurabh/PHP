@@ -7,10 +7,10 @@
  }
 
 function Login_Attempt($Username,$Password){
-    $connectingDB;
+    $con;
     $Query="SELECT * FROM registration WHERE username='$Username' AND password='$Password'";
-    $Execute=mysql_query($Query);
-    if($admin=mysql_fetch_assoc($Execute)){
+    $Execute = mysqli_query($con,$Query);
+    if($admin = mysql_fetch_assoc($Execute)){
         return $admin;
     }else{
         return null;
