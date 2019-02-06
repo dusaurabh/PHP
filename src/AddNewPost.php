@@ -4,9 +4,9 @@
 <?php Confirm_Login(); ?>
 <?php  
 if(isset($_POST["Submit"])){
-$Title = mysql_real_escape_string($_POST["Title"]);
-$Category = mysql_real_escape_string($_POST["Category"]);
-$Post = mysql_real_escape_string($_POST["Post"]);
+$Title = $_POST["Title"];
+$Category = $_POST["Category"];
+$Post = $_POST["Post"];
 date_default_timezone_set('Asia/Kolkata');
 $currenttime = time();
 $DateTime = strftime("%B-%d-%Y %H:%M:%S", $currenttime);
@@ -25,9 +25,9 @@ if(empty($Title)){
          echo "alert('Title Should Be Atleast 2 Character Long')";
          echo '</script>';
 }else{
-    global $connectingDB;
+    global $con;
     $Query = "INSERT INTO admin_panel(datetime,title,category,author,image,post)VALUES('$DateTime','$Title','$Category','$Admin','$Image','$Post')";
-    $Execute = mysql_query($Query);
+    $Execute = mysqli_query($con,$Query);
     move_uploaded_file($_FILES["Image"]["tmp_name"],$Target);
     if($Execute){
      echo '<script language="javascript">';
@@ -95,11 +95,11 @@ if(empty($Title)){
         <label for="categoryname"><span class="FieldInfo">Category:</span></label>
         <select class="form-control form-control-lg" id="categoryname" name="Category">
         <?php                    
-global $connectingDB;
+global $con;
 $ViewQuery = "SELECT * FROM Category ORDER BY datetime DESC";
-$Execute = mysql_query($ViewQuery);
+$Execute = mysqli_query($con,$ViewQuery);
 
-while($DataRows = mysql_fetch_array($Execute)){
+while($DataRows = mysqli_fetch_array($Execute)){
     $ID = $DataRows["id"];
     $CategoryName = $DataRows["name"];   
 ?>  
