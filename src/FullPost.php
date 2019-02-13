@@ -4,9 +4,9 @@
 
 <?php  
 if(isset($_POST["Submit"])){
-$Name = mysql_real_escape_string($_POST["Name"]);
-$Email = mysql_real_escape_string($_POST["Email"]);
-$Comment = mysql_real_escape_string($_POST["Comment"]);
+$Name = $_POST["Name"];
+$Email = $_POST["Email"];
+$Comment = $_POST["Comment"];
 date_default_timezone_set('Asia/Kolkata');
 $currenttime = time();
 $DateTime = strftime("%B-%d-%Y %H:%M:%S", $currenttime);
@@ -24,10 +24,10 @@ if(empty($Name)|| empty($Email) || empty($Comment)){
          echo "alert('Comment Should Be Only 500 Character Long')";
          echo '</script>';
 }else{
-    global $connectingDB;
+    global $con;
     $PostId=$_GET["id"];
     $Query="INSERT INTO comments (datetime,name,email,comment,approveby,status,admin_panel_id) VALUES('$DateTime','$Name','$Email','$Comment','Pending','OFF','$PostId')";
-    $Execute = mysql_query($Query);
+    $Execute = mysqli_query($con,$Query);
     
     if($Execute){
      echo '<script language="javascript">';
@@ -146,7 +146,7 @@ if(empty($Name)|| empty($Email) || empty($Comment)){
     <div class="row">
         <div class="col-sm-8">
            <?php 
-            global $connectingDB;
+            global $con;
             if(isset($_GET["SearchButton"])){
                 $Search =$_GET["Search"];
                 $ViewQuery = "SELECT * FROM admin_panel WHERE datetime LIKE  '%$Search%' OR title LIKE '%$Search%' OR category LIKE '%$Search%' OR post LIKE '%$Search%'  ";
@@ -155,8 +155,8 @@ if(empty($Name)|| empty($Email) || empty($Comment)){
             $PostIDFromUrl=$_GET["id"];
             $ViewQuery = "SELECT * FROM admin_panel WHERE id='$PostIDFromUrl'
             ORDER BY datetime desc";}
-            $Execute = mysql_query($ViewQuery);
-            while($DataRows=mysql_fetch_array($Execute)){
+            $Execute = mysqli_query($con,$ViewQuery);
+            while($DataRows=mysqli_fetch_array($Execute)){
                $PostId = $DataRows["id"];
                $DateTime = $DataRows["datetime"];
                $Title = $DataRows["title"];
@@ -184,11 +184,11 @@ if(empty($Name)|| empty($Email) || empty($Comment)){
 <br>
 <span class="FieldInfo">Comments</span>
 <?php 
-$connectingDB;
+$con;
 $PostIdForComments=$_GET["id"];
 $ExtractingComments="SELECT * FROM comments WHERE admin_panel_id='$PostIdForComments' AND  status='ON'";
-$Execute=mysql_query($ExtractingComments);
-while($DataRows=mysql_fetch_array($Execute)){
+$Execute=mysqli_query($con,$ExtractingComments);
+while($DataRows=mysqli_fetch_array($Execute)){
     $CommentDate=$DataRows["datetime"];
     $CommenterName=$DataRows["name"];
     $CommentByUser=$DataRows["comment"];
