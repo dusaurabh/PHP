@@ -5,9 +5,9 @@
 
 <?php  
 if(isset($_POST["Submit"])){
-$Title = mysql_real_escape_string($_POST["Title"]);
-$Category = mysql_real_escape_string($_POST["Category"]);
-$Post = mysql_real_escape_string($_POST["Post"]);
+$Title = $_POST["Title"];
+$Category = $_POST["Category"];
+$Post = $_POST["Post"];
 date_default_timezone_set('Asia/Kolkata');
 $currenttime = time();
 $DateTime = strftime("%B-%d-%Y %H:%M:%S", $currenttime);
@@ -26,12 +26,12 @@ if(empty($Title)){
          echo "alert('Title Should Be Atleast 2 Character Long')";
          echo '</script>';
 }else{
-    global $connectingDB;
+    global $con;
     $EditFromUrl=$_GET['Edit'];
     $Query="UPDATE admin_panel
     SET datetime='$DateTime', title='$Title', category='$Category', author='$Admin', image='$Image', post='$Post'
     WHERE id='$EditFromUrl'";
-    $Execute = mysql_query($Query);
+    $Execute = mysqli_query($con,$Query);
     move_uploaded_file($_FILES["Image"]["tmp_name"],$Target);
     if($Execute){
      echo '<script language="javascript">';
@@ -92,10 +92,10 @@ if(empty($Title)){
   <div>
 <?php 
 $SearchQueryParameter=$_GET["Edit"];
-global $connectingDB;       
+global $con;       
 $Query="SELECT * FROM admin_panel WHERE id='$SearchQueryParameter'";
-$Execute = mysql_query($Query);
-while($DataRows=mysql_fetch_array($Execute)){
+$Execute = mysqli_query($con,$Query);
+while($DataRows=mysqli_fetch_array($Execute)){
     $TitleToBeUpdate=$DataRows['title'];
     $CategoryToBeUpdate=$DataRows['category'];
     $ImageToBeUpdate=$DataRows['image'];
@@ -114,11 +114,11 @@ while($DataRows=mysql_fetch_array($Execute)){
         <label for="categoryname"><span class="FieldInfo">Category:</span></label>
         <select  class="form-control form-control-lg" id="categoryname" name="Category">
         <?php                    
-global $connectingDB;
+global $con;
 $ViewQuery = "SELECT * FROM Category ORDER BY datetime DESC";
-$Execute = mysql_query($ViewQuery);
+$Execute = mysqli_query($con,$ViewQuery);
 
-while($DataRows = mysql_fetch_array($Execute)){
+while($DataRows = mysqli_fetch_array($Execute)){
     $ID = $DataRows["id"];
     $CategoryName = $DataRows["name"];   
 ?>  
