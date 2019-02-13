@@ -3,8 +3,8 @@
 <?php require_once('Include/Functions.php'); ?>
 <?php  
 if(isset($_POST["Submit"])){
-    $Username = mysql_real_escape_string($_POST["Username"]);
-    $Password = mysql_real_escape_string($_POST["Password"]);
+    $Username = $_POST["Username"];
+    $Password = $_POST["Password"];
     if(empty($Username) || empty($Password)){
      $_SESSION["ErrorMessage"]="All Fields Must Be Filled";
      Redirect_to("Login.php");
