@@ -2,10 +2,10 @@
 <?php require_once('Include/Sessions.php'); ?>
 <?php  
 if(isset($_GET["id"])){
- $connectingDB;
+ $con;
  $IdFromUrl=$_GET["id"];
  $Query="UPDATE comments set status='OFF' WHERE id='$IdFromUrl'";
- $Execute=mysql_query($Query);
+ $Execute=mysqli_query($con,$Query);
     if($Execute){
         $_SESSION["DeleteMessage"]="Comment Un-Approve SuccessFully";
         header("location: Comments.php");
